@@ -1,27 +1,30 @@
 package com.tw.step8.assignment2;
 
+import com.tw.step8.assignment2.exceptions.IllegalProbabilityException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ChanceTest {
+
   @Test
-  void shouldGiveProbabilityOfGettingAChance() {
-    Chance chance = new Chance(0.1);
-
-    double actual = chance.probability();
-    double expected = 0.1;
-
-    assertEquals(expected,actual);
+  void shouldThrowExceptionIfIllegalProbabilityProvided() {
+    try {
+      Chance.createChance(1.1);
+      fail();
+    } catch (IllegalProbabilityException e) {
+      String expected = String.format("Provided illegal probability 1.1");
+      assertEquals(expected, e.getMessage());
+    }
   }
 
   @Test
-  void shouldGiveProbabilityOfNotGettingAChance() {
-    Chance chance = new Chance(0.1);
+  void shouldGiveProbabilityOfNotGettingAChance() throws IllegalProbabilityException {
+    Chance chance = Chance.createChance(0.1);
 
-    double actual = chance.improbability();
-    double expected = 0.9;
+    Chance actual = chance.notGettingAChance();
+    Chance expected = Chance.createChance(0.9);
 
-    assertEquals(expected,actual);
+    assertTrue(actual.equals(expected));
   }
 }
