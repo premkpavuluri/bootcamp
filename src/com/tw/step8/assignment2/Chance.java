@@ -18,8 +18,12 @@ public class Chance {
     return new Chance(probability);
   }
 
-  public Chance notGettingAChance() {
-    return new Chance(1 - probability);
+  public Chance not() throws IllegalProbabilityException {
+    return Chance.createChance(1 - probability);
+  }
+
+  public Chance and(Chance anotherChance) throws IllegalProbabilityException {
+    return Chance.createChance(this.probability * anotherChance.probability);
   }
 
   @Override
