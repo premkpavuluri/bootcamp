@@ -1,22 +1,22 @@
 package com.tw.step8.assignment3;
 
-import com.tw.step8.assignment3.exceptions.exceptions.NegativeLengthException;
+import com.tw.step8.assignment3.exceptions.exceptions.NegativeMagnitudeException;
 
 public class Length {
-  private final int value;
-  private final Unit unit;
+  private final double value;
+  private final LengthUnit unit;
 
-  private Length(int value, Unit unit) {
+  private Length(double value, LengthUnit lengthUnit) {
     this.value = value;
-    this.unit = unit;
+    this.unit = lengthUnit;
   }
 
-  public static Length createLength(int value, Unit unit) throws NegativeLengthException {
+  public static Length createLength(double value, LengthUnit lengthUnit) throws NegativeMagnitudeException {
     if (value < 0) {
-      throw new NegativeLengthException(value);
+      throw new NegativeMagnitudeException(value);
     }
 
-    return new Length(value, unit);
+    return new Length(value, lengthUnit);
   }
 
   public int compare(Length otherLength) {
@@ -31,5 +31,35 @@ public class Length {
 
   private double inCentimeters() {
     return unit.equivalentCentimeter() * value;
+  }
+
+  public Length add(Length otherLength) throws NegativeMagnitudeException {
+    LengthUnit standardResultUnit = LengthUnit.INCH;
+
+    double sumInCms = this.inCentimeters() + otherLength.inCentimeters();
+    double sumInInches = sumInCms / standardResultUnit.equivalentCentimeter();
+
+    return createLength(sumInInches, standardResultUnit);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Length that = (Length) o;
+
+    if (Double.compare(that.value, value) != 0) return false;
+    return unit == that.unit;
+  }
+
+  @Override
+  public int hashCode() {
+    int result;
+    long temp;
+    temp = Double.doubleToLongBits(value);
+    result = (int) (temp ^ (temp >>> 32));
+    result = 31 * result + unit.hashCode();
+    return result;
   }
 }
