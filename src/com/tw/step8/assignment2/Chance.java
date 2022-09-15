@@ -25,7 +25,6 @@ public class Chance {
   public Chance and(Chance anotherChance) throws IllegalProbabilityException {
     return Chance.createChance(this.probability * anotherChance.probability);
   }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -40,5 +39,13 @@ public class Chance {
   public int hashCode() {
     long temp = Double.doubleToLongBits(probability);
     return (int) (temp ^ (temp >>> 32));
+  }
+
+  public Chance or(Chance anotherChance) throws IllegalProbabilityException {
+    Chance notOfFirst = this.not();
+    Chance notOfSecond = anotherChance.not();
+    Chance andOfBoth = notOfFirst.and(notOfSecond);
+
+    return andOfBoth.not();
   }
 }

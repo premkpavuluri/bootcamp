@@ -36,7 +36,7 @@ class ChanceTest {
     Chance actual = chance.not();
     Chance expected = Chance.createChance(0.9);
 
-    assertTrue(actual.equals(expected));
+    assertEquals(actual, expected);
   }
 
   @Test
@@ -47,6 +47,17 @@ class ChanceTest {
     Chance actual = firstCoinChance.and(secondCoinChance);
     Chance expected = Chance.createChance(0.03);
 
-    assertTrue(actual.equals(expected));
+    assertEquals(actual, expected);
+  }
+
+  @Test
+  void orOfTwoChances() throws IllegalProbabilityException {
+    Chance firstChance = Chance.createChance(0.3);
+    Chance secondChance = Chance.createChance(0.1);
+
+    Chance actual = firstChance.or(secondChance);
+    Chance expected = Chance.createChance(0.37);
+
+    assertEquals(expected,actual);
   }
 }
