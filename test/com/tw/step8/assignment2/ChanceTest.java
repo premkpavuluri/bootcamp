@@ -9,24 +9,12 @@ class ChanceTest {
 
   @Test
   void shouldThrowExceptionIfProbabilityIsGreaterThanOne() {
-    try {
-      Chance.createChance(1.1);
-      fail();
-    } catch (IllegalProbabilityException e) {
-      String expected = String.format("Provided illegal probability 1.1");
-      assertEquals(expected, e.getMessage());
-    }
+    assertThrows(IllegalProbabilityException.class, () -> Chance.createChance(1.1));
   }
 
   @Test
   void shouldThrowExceptionIfProbabilityIsLessThanZero() {
-    try {
-      Chance.createChance(-1);
-      fail();
-    } catch (IllegalProbabilityException e) {
-      String expected = String.format("Provided illegal probability -1.0");
-      assertEquals(expected, e.getMessage());
-    }
+    assertThrows(IllegalProbabilityException.class, () -> Chance.createChance(-1));
   }
 
   @Test
@@ -42,7 +30,7 @@ class ChanceTest {
   @Test
   void andOfTwoChances() throws IllegalProbabilityException {
     Chance firstCoinChance = Chance.createChance(0.1);
-    Chance secondCoinChance  = Chance.createChance(0.3);
+    Chance secondCoinChance = Chance.createChance(0.3);
 
     Chance actual = firstCoinChance.and(secondCoinChance);
     Chance expected = Chance.createChance(0.03);
@@ -58,6 +46,6 @@ class ChanceTest {
     Chance actual = firstChance.or(secondChance);
     Chance expected = Chance.createChance(0.37);
 
-    assertEquals(expected,actual);
+    assertEquals(expected, actual);
   }
 }
