@@ -1,6 +1,6 @@
 package com.tw.step8.assignment3;
 
-import com.tw.step8.assignment3.exceptions.exceptions.NegativeMagnitudeException;
+import com.tw.step8.assignment3.exceptions.NegativeMagnitudeException;
 
 public class Length {
   private final double value;
@@ -30,14 +30,14 @@ public class Length {
   }
 
   private double inCentimeters() {
-    return unit.equivalentCentimeter() * value;
+    return this.unit.toBaseUnit() * this.value;
   }
 
   public Length add(Length otherLength) throws NegativeMagnitudeException {
     LengthUnit standardResultUnit = LengthUnit.INCH;
 
     double sumInCms = this.inCentimeters() + otherLength.inCentimeters();
-    double sumInInches = sumInCms / standardResultUnit.equivalentCentimeter();
+    double sumInInches = sumInCms / standardResultUnit.toBaseUnit();
 
     return createLength(sumInInches, standardResultUnit);
   }

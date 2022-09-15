@@ -8,16 +8,16 @@ class LengthUnitTest {
 
   @Test
   void shouldProvideFootInCentimeters() {
-    assertEquals(30.48, LengthUnit.FOOT.equivalentCentimeter());
+    assertEquals(30.48, LengthUnit.FOOT.toBaseUnit());
   }
 
   @Test
   void shouldProvideInchInCentimeters() {
-    assertEquals(2.54, LengthUnit.INCH.equivalentCentimeter());
+    assertEquals(2.54, LengthUnit.INCH.toBaseUnit());
   }
 
   @Test
   void shouldProvideMillimeterInCentimeters() {
-    assertEquals(0.1, LengthUnit.MM.equivalentCentimeter());
+    assertEquals(0.1, LengthUnit.MM.toBaseUnit());
   }
 }

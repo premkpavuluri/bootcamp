@@ -1,4 +1,4 @@
-package com.tw.step8.assignment3.exceptions.exceptions;
+package com.tw.step8.assignment3.exceptions;
 
 public class NegativeMagnitudeException extends Throwable {
   private final double magnitude;
