@@ -10,6 +10,16 @@ public class Length {
   }
 
   public int compare(Length otherLength) {
-    return 0;
+    double difference = this.inCentimeters() - otherLength.inCentimeters();
+
+    if (difference == 0) {
+      return 0;
+    }
+
+    return difference < 0 ? -1 : 1;
+  }
+
+  private double inCentimeters() {
+    return unit.equivalentCentimeter() * value;
   }
 }
