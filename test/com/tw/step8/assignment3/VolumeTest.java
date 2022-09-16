@@ -17,7 +17,7 @@ class VolumeTest {
     Volume volumeInLiters = Volume.createVolume(3.78, VolumeUnit.LITER);
     Volume volumeInGallons = Volume.createVolume(1, VolumeUnit.GALLON);
 
-    assertEquals(0, volumeInLiters.compare(volumeInGallons));
+    assertEquals(ComparisonResult.EQUAL, volumeInLiters.compare(volumeInGallons));
   }
 
   @Test
@@ -25,7 +25,7 @@ class VolumeTest {
     Volume volumeInLiters = Volume.createVolume(4, VolumeUnit.LITER);
     Volume volumeInGallons = Volume.createVolume(1, VolumeUnit.GALLON);
 
-    assertEquals(1, volumeInLiters.compare(volumeInGallons));
+    assertEquals(ComparisonResult.GREATER, volumeInLiters.compare(volumeInGallons));
   }
 
   @Test
@@ -33,7 +33,7 @@ class VolumeTest {
     Volume volumeInLiters = Volume.createVolume(1, VolumeUnit.LITER);
     Volume volumeInGallons = Volume.createVolume(1, VolumeUnit.GALLON);
 
-    assertEquals(-1, volumeInLiters.compare(volumeInGallons));
+    assertEquals(ComparisonResult.LESSER, volumeInLiters.compare(volumeInGallons));
   }
 
   @Test

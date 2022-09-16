@@ -19,14 +19,14 @@ public class Length {
     return new Length(value, lengthUnit);
   }
 
-  public int compare(Length otherLength) {
+  public ComparisonResult compare(Length otherLength) {
     double difference = this.inCentimeters() - otherLength.inCentimeters();
 
     if (difference == 0) {
-      return 0;
+      return ComparisonResult.EQUAL;
     }
 
-    return difference < 0 ? -1 : 1;
+    return difference < 0 ? ComparisonResult.LESSER : ComparisonResult.GREATER;
   }
 
   private double inCentimeters() {

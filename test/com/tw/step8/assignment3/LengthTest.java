@@ -17,7 +17,7 @@ class LengthTest {
     Length lengthInFeet = Length.createLength(1, LengthUnit.FOOT);
     Length lengthInInches = Length.createLength(12, LengthUnit.INCH);
 
-    assertEquals(0, lengthInFeet.compare(lengthInInches));
+    assertEquals(ComparisonResult.EQUAL, lengthInFeet.compare(lengthInInches));
   }
 
   @Test
@@ -25,7 +25,7 @@ class LengthTest {
     Length lengthInFeet = Length.createLength(2, LengthUnit.FOOT);
     Length lengthInInches = Length.createLength(12, LengthUnit.INCH);
 
-    assertEquals(1, lengthInFeet.compare(lengthInInches));
+    assertEquals(ComparisonResult.GREATER, lengthInFeet.compare(lengthInInches));
   }
 
   @Test
@@ -33,7 +33,7 @@ class LengthTest {
     Length lengthInFeet = Length.createLength(1, LengthUnit.FOOT);
     Length lengthInInches = Length.createLength(20, LengthUnit.INCH);
 
-    assertEquals(-1, lengthInFeet.compare(lengthInInches));
+    assertEquals(ComparisonResult.LESSER, lengthInFeet.compare(lengthInInches));
   }
 
   @Test

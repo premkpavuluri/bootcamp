@@ -19,14 +19,14 @@ public class Volume {
     return new Volume(value, volumeUnit);
   }
 
-  public int compare(Volume otherVolume) {
+  public ComparisonResult compare(Volume otherVolume) {
     double difference = this.inLiters() - otherVolume.inLiters();
 
     if (difference == 0) {
-      return 0;
+      return ComparisonResult.EQUAL;
     }
 
-    return difference < 0 ? -1 : 1;
+    return difference < 0 ? ComparisonResult.LESSER : ComparisonResult.GREATER;
   }
 
   private double inLiters() {
