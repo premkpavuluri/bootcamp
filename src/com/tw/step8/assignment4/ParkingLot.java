@@ -6,10 +6,12 @@ import com.tw.step8.assignment4.exceptions.NoSlotAvailableException;
 public class ParkingLot {
   private final int numberOfSlots;
   private int occupiedSlots;
+  private Notifier notifier;
 
   private ParkingLot(int numberOfSlots) {
     this.numberOfSlots = numberOfSlots;
     this.occupiedSlots = 0;
+    this.notifier = null;
   }
 
   public static ParkingLot createParkingLot(int numberOfSlots) throws NegativeSlotsException {
@@ -26,10 +28,43 @@ public class ParkingLot {
     }
 
     this.occupiedSlots++;
+    this.events();
     return this.occupiedSlots;
   }
 
-  public boolean isFull() {
+  private void events() {
+    if (this.isFull()) {
+      this.notifier.notifyFull();
+    }
+
+    if (this.isEightyPercentFull()) {
+      this.notifier.notifyEightyPercent();
+    }
+
+    if(this.isWithinTwentyPercent()){
+      this.notifier.notifyTwentyPercent();
+    }
+  }
+
+  private boolean isWithinTwentyPercent() {
+    double twentyPercent = 20;
+    return this.occupiedSlotsInPercent() <= twentyPercent;
+  }
+
+  private boolean isEightyPercentFull() {
+    double eightyPercent = 80;
+    return this.occupiedSlotsInPercent() >= eightyPercent;
+  }
+
+  private int occupiedSlotsInPercent() {
+    return (this.occupiedSlots / this.numberOfSlots) * 100;
+  }
+
+  private boolean isFull() {
     return this.numberOfSlots == this.occupiedSlots;
+  }
+
+  public void acceptNotifier(Notifier notifier) {
+    this.notifier = notifier;
   }
 }
