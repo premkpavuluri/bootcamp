@@ -33,13 +33,11 @@ public class Length {
     return this.unit.toBaseUnit() * this.value;
   }
 
-  public Length add(Length otherLength) throws NegativeMagnitudeException {
-    LengthUnit standardResultUnit = LengthUnit.INCH;
-
+  public Length add(Length otherLength, LengthUnit resultUnit) throws NegativeMagnitudeException {
     double sumInCms = this.inCentimeters() + otherLength.inCentimeters();
-    double sumInInches = sumInCms / standardResultUnit.toBaseUnit();
+    double sumInResultUnit = sumInCms / resultUnit.toBaseUnit();
 
-    return createLength(sumInInches, standardResultUnit);
+    return createLength(sumInResultUnit, resultUnit);
   }
 
   @Override

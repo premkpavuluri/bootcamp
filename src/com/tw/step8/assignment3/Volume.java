@@ -33,11 +33,15 @@ public class Volume {
     return this.volumeUnit.toBaseUnit() * this.value;
   }
 
-  public Volume add(Volume otherVolume) throws NegativeMagnitudeException {
-    VolumeUnit standardResultUnit = VolumeUnit.LITER;
+  public Volume add(Volume otherVolume, VolumeUnit resultUnit) throws NegativeMagnitudeException {
     double sumInLiters = this.inLiters() + otherVolume.inLiters();
+    double sumInResultUnit = sumInLiters / resultUnit.toBaseUnit();
 
-    return createVolume(sumInLiters, standardResultUnit);
+    return createVolume(sumInResultUnit, resultUnit);
+  }
+
+  public boolean isWithinDelta(Volume otherVolume, double delta) {
+    return Math.abs(this.value - otherVolume.value) < delta;
   }
 
   @Override

@@ -17,7 +17,9 @@ class LengthTest {
     Length lengthInFeet = Length.createLength(1, LengthUnit.FOOT);
     Length lengthInInches = Length.createLength(12, LengthUnit.INCH);
 
-    assertEquals(ComparisonResult.EQUAL, lengthInFeet.compare(lengthInInches));
+    ComparisonResult actual = lengthInFeet.compare(lengthInInches);
+
+    assertEquals(ComparisonResult.EQUAL, actual);
   }
 
   @Test
@@ -25,7 +27,9 @@ class LengthTest {
     Length lengthInFeet = Length.createLength(2, LengthUnit.FOOT);
     Length lengthInInches = Length.createLength(12, LengthUnit.INCH);
 
-    assertEquals(ComparisonResult.GREATER, lengthInFeet.compare(lengthInInches));
+    ComparisonResult actual = lengthInFeet.compare(lengthInInches);
+
+    assertEquals(ComparisonResult.GREATER, actual);
   }
 
   @Test
@@ -33,16 +37,19 @@ class LengthTest {
     Length lengthInFeet = Length.createLength(1, LengthUnit.FOOT);
     Length lengthInInches = Length.createLength(20, LengthUnit.INCH);
 
-    assertEquals(ComparisonResult.LESSER, lengthInFeet.compare(lengthInInches));
+    ComparisonResult actual = lengthInFeet.compare(lengthInInches);
+
+    assertEquals(ComparisonResult.LESSER, actual);
   }
 
   @Test
   void shouldAddTwoLengthsOfDifferentUnitsInInches() throws NegativeMagnitudeException {
     Length lengthInFeet = Length.createLength(1, LengthUnit.FOOT);
-    Length lengthInInches = Length.createLength(20, LengthUnit.INCH);
+    Length lengthInInches = Length.createLength(1, LengthUnit.INCH);
 
-    Length expectedLength = Length.createLength(32, LengthUnit.INCH);
+    Length expectedLength = Length.createLength(330.2, LengthUnit.MM);
+    Length actual = lengthInFeet.add(lengthInInches, LengthUnit.MM);
 
-    assertEquals(expectedLength, lengthInFeet.add(lengthInInches));
+    assertEquals(expectedLength, actual);
   }
 }

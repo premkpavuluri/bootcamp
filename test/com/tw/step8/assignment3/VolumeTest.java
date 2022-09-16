@@ -17,7 +17,9 @@ class VolumeTest {
     Volume volumeInLiters = Volume.createVolume(3.78, VolumeUnit.LITER);
     Volume volumeInGallons = Volume.createVolume(1, VolumeUnit.GALLON);
 
-    assertEquals(ComparisonResult.EQUAL, volumeInLiters.compare(volumeInGallons));
+    ComparisonResult actualVolume = volumeInLiters.compare(volumeInGallons);
+
+    assertEquals(ComparisonResult.EQUAL, actualVolume);
   }
 
   @Test
@@ -25,7 +27,9 @@ class VolumeTest {
     Volume volumeInLiters = Volume.createVolume(4, VolumeUnit.LITER);
     Volume volumeInGallons = Volume.createVolume(1, VolumeUnit.GALLON);
 
-    assertEquals(ComparisonResult.GREATER, volumeInLiters.compare(volumeInGallons));
+    ComparisonResult actualVolume = volumeInLiters.compare(volumeInGallons);
+
+    assertEquals(ComparisonResult.GREATER, actualVolume);
   }
 
   @Test
@@ -33,7 +37,9 @@ class VolumeTest {
     Volume volumeInLiters = Volume.createVolume(1, VolumeUnit.LITER);
     Volume volumeInGallons = Volume.createVolume(1, VolumeUnit.GALLON);
 
-    assertEquals(ComparisonResult.LESSER, volumeInLiters.compare(volumeInGallons));
+    ComparisonResult actualVolume = volumeInLiters.compare(volumeInGallons);
+
+    assertEquals(ComparisonResult.LESSER, actualVolume);
   }
 
   @Test
@@ -42,7 +48,19 @@ class VolumeTest {
     Volume volumeInGallons = Volume.createVolume(1, VolumeUnit.GALLON);
 
     Volume expectedVolume = Volume.createVolume(6.98, VolumeUnit.LITER);
+    Volume actualVolume = volumeInLiters.add(volumeInGallons, VolumeUnit.LITER);
 
-    assertEquals(expectedVolume, volumeInLiters.add(volumeInGallons));
+    assertTrue(expectedVolume.isWithinDelta(actualVolume, 0.01));
+  }
+
+  @Test
+  void shouldAddTwoVolumesOfDifferentUnitsInGallons() throws NegativeMagnitudeException {
+    Volume volumeInLiters = Volume.createVolume(0, VolumeUnit.LITER);
+    Volume volumeInGallons = Volume.createVolume(1, VolumeUnit.GALLON);
+
+    Volume expectedVolume = Volume.createVolume(1.0, VolumeUnit.GALLON);
+    Volume actualVolume = volumeInLiters.add(volumeInGallons, VolumeUnit.GALLON);
+
+    assertTrue(expectedVolume.isWithinDelta(actualVolume, 0.01));
   }
 }
