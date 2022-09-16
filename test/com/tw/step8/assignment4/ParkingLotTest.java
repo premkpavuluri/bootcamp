@@ -16,7 +16,7 @@ class ParkingLotTest {
   @Test
   void shouldParkAVehicle() throws NegativeSlotsException, NoSlotAvailableException {
     ParkingLot parkingLot = ParkingLot.createParkingLot(5);
-    parkingLot.acceptNotifier(new Notifier(new Observer[]{}));
+    parkingLot.acceptNotifier(new Notifier());
 
     assertEquals(1, parkingLot.park());
   }
@@ -24,7 +24,7 @@ class ParkingLotTest {
   @Test
   void shouldThrowNoSlotAvailableExceptionIfLotIsFull() throws NegativeSlotsException {
     ParkingLot parkingLot = ParkingLot.createParkingLot(0);
-    parkingLot.acceptNotifier(new Notifier(new Observer[]{}));
+    parkingLot.acceptNotifier(new Notifier());
 
     assertThrows(NoSlotAvailableException.class, parkingLot::park);
   }

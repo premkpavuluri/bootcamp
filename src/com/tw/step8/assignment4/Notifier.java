@@ -1,30 +1,35 @@
 package com.tw.step8.assignment4;
 
-public class Notifier {
-  private final Observer[] observers;
+import java.util.ArrayList;
 
-  public Notifier(Observer[] observers) {
-    this.observers = observers;
+public class Notifier {
+  private final ArrayList<Observer> observers;
+
+  public Notifier() {
+    this.observers = new ArrayList<>();
   }
 
-  private void notifyObservers(String notification) {
+  public boolean addObserver(Observer observer) {
+    return observers.add(observer);
+  }
+
+  private void notifyObservers(Event event) {
     for (Observer observer : this.observers) {
-      observer.observe(notification);
+      if (observer.getSubscribedEvent() == event) {
+        observer.observe(event.asString());
+      }
     }
   }
 
   public void notifyEightyPercent() {
-    String notification = "Parking lot is 80% full";
-    this.notifyObservers(notification);
+    this.notifyObservers(Event.ABOVE_EIGHTY);
   }
 
   public void notifyTwentyPercent() {
-    String notification = "Parking lot is 20% or lesser";
-    this.notifyObservers(notification);
+    this.notifyObservers(Event.WITHIN_TWENTY);
   }
 
   public void notifyFull() {
-    String notification = "Parking lot is full";
-    this.notifyObservers(notification);
+    this.notifyObservers(Event.FULL);
   }
 }
