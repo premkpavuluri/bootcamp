@@ -13,23 +13,23 @@ public class Notifier {
     return observers.add(observer);
   }
 
-  private void notifyObservers(Event event) {
+  private void notifyObservers(int lotId, Event event) {
     for (Observer observer : this.observers) {
       if (observer.getSubscribedEvent() == event) {
-        observer.observe(event.asString());
+        observer.observe(lotId, event);
       }
     }
   }
 
-  public void notifyEightyPercent() {
-    this.notifyObservers(Event.ABOVE_EIGHTY);
+  public void notifyEightyPercent(int id) {
+    this.notifyObservers(id, Event.LOT_ABOVE_EIGHTY);
   }
 
-  public void notifyTwentyPercent() {
-    this.notifyObservers(Event.WITHIN_TWENTY);
+  public void notifyTwentyPercent(int id) {
+    this.notifyObservers(id, Event.LOT_WITHIN_TWENTY);
   }
 
-  public void notifyFull() {
-    this.notifyObservers(Event.FULL);
+  public void notifyFull(int id) {
+    this.notifyObservers(id, Event.LOT_FULL);
   }
 }
