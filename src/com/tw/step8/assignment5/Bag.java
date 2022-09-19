@@ -4,6 +4,7 @@ import com.tw.step8.assignment5.exceptions.CannotAddBallException;
 import com.tw.step8.assignment5.exceptions.MaxCapacityExceededException;
 import com.tw.step8.assignment5.exceptions.NegativeCapacityException;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.function.Predicate;
 
@@ -17,7 +18,6 @@ public class Bag {
     this.balls = new HashSet<Ball>();
   }
 
-
   public static Bag createBag(int maxCapacity) throws NegativeCapacityException {
     if (maxCapacity < 0) {
       throw new NegativeCapacityException(maxCapacity);
@@ -28,7 +28,7 @@ public class Bag {
 
   public boolean add(Ball ball) throws MaxCapacityExceededException, CannotAddBallException {
     if (isFull()) {
-      throw new MaxCapacityExceededException();
+      throw new MaxCapacityExceededException(this.maxCapacity);
     }
 
     validateBall(ball);
@@ -36,25 +36,25 @@ public class Bag {
     return this.balls.add(ball);
   }
 
-  private void validateBall(Ball ball) throws MaxCapacityExceededException, CannotAddBallException {
+  private void validateBall(Ball ball) throws CannotAddBallException {
     if (ball.isOfSameColor(Color.BLACK) && isBallPresent(Color.BLUE)) {
-      throw new CannotAddBallException();
+      throw new CannotAddBallException(Color.BLACK);
     }
 
     if (ball.isOfSameColor(Color.BLUE) && isBallPresent(Color.BLACK)) {
-      throw new CannotAddBallException();
+      throw new CannotAddBallException(Color.BLUE);
     }
 
     if (ball.isOfSameColor(Color.GREEN) && hasMaxBallsOf(Color.GREEN, 3)) {
-      throw new MaxCapacityExceededException();
+      throw new CannotAddBallException(Color.GREEN);
     }
 
     if (ball.isOfSameColor(Color.RED) && isRedBallNotAllowedToAdd()) {
-      throw new CannotAddBallException();
+      throw new CannotAddBallException(Color.RED);
     }
 
     if (ball.isOfSameColor(Color.YELLOW) && isYellowBallNotAllowed()) {
-      throw new CannotAddBallException();
+      throw new CannotAddBallException(Color.YELLOW);
     }
   }
 
@@ -69,8 +69,8 @@ public class Bag {
   }
 
   private boolean isRedBallNotAllowedToAdd() {
-    int greenBallCount = ballsOfColor(Color.GREEN);
-    int redBallCount = ballsOfColor(Color.RED);
+    int greenBallCount = this.ballsOfColor(Color.GREEN);
+    int redBallCount = this.ballsOfColor(Color.RED);
 
     return (greenBallCount * 2) <= redBallCount;
   }
@@ -82,7 +82,7 @@ public class Bag {
   }
 
   private boolean hasMaxBallsOf(Color color, int capacity) {
-    int ballCount = ballsOfColor(color);
+    int ballCount = this.ballsOfColor(color);
 
     return ballCount >= capacity;
   }

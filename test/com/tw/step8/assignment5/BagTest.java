@@ -4,16 +4,13 @@ import com.tw.step8.assignment5.exceptions.CannotAddBallException;
 import com.tw.step8.assignment5.exceptions.MaxCapacityExceededException;
 import com.tw.step8.assignment5.exceptions.NegativeCapacityException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BagTest {
   @Test
   void shouldThrowNegativeCapacityException() {
-    assertThrows(NegativeCapacityException.class, (Executable) () -> {
-      Bag bag = Bag.createBag(-1);
-    });
+    assertThrows(NegativeCapacityException.class, () -> Bag.createBag(-1));
   }
 
   @Test
@@ -38,17 +35,17 @@ class BagTest {
     bag.add(new Ball(2, Color.GREEN));
     bag.add(new Ball(3, Color.GREEN));
 
-    assertThrows(MaxCapacityExceededException.class, () -> bag.add(new Ball(4, Color.GREEN)));
+    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(4, Color.GREEN)));
   }
 
   @Test
   void shouldThrowCannotAddBallExceptionIfRedBallsAreGreaterThanDoubleOfGreenBalls() throws NegativeCapacityException, CannotAddBallException, MaxCapacityExceededException {
     Bag bag = Bag.createBag(4);
     bag.add(new Ball(1, Color.GREEN));
-    bag.add(new Ball(2,Color.RED));
-    bag.add(new Ball(3,Color.RED));
+    bag.add(new Ball(2, Color.RED));
+    bag.add(new Ball(3, Color.RED));
 
-    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(4,Color.RED)));
+    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(4, Color.RED)));
   }
 
   @Test
@@ -56,22 +53,22 @@ class BagTest {
     Bag bag = Bag.createBag(4);
     bag.add(new Ball(1, Color.GREEN));
 
-    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2,Color.YELLOW)));
+    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2, Color.YELLOW)));
   }
 
   @Test
   void shouldThrowCannotAddBallExceptionWhenTryToAddBlackBallIfBlueBallIsPresent() throws NegativeCapacityException, CannotAddBallException, MaxCapacityExceededException {
     Bag bag = Bag.createBag(5);
-    bag.add(new Ball(1,Color.BLUE));
+    bag.add(new Ball(1, Color.BLUE));
 
-    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2,Color.BLACK)));
+    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2, Color.BLACK)));
   }
 
   @Test
   void shouldThrowCannotAddBallExceptionWhenTryToAddBlueBallIfBlackBallIsPresent() throws NegativeCapacityException, CannotAddBallException, MaxCapacityExceededException {
     Bag bag = Bag.createBag(5);
-    bag.add(new Ball(1,Color.BLACK));
+    bag.add(new Ball(1, Color.BLACK));
 
-    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2,Color.BLUE)));
+    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2, Color.BLUE)));
   }
 }
