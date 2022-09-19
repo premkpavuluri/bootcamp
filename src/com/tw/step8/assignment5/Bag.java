@@ -5,6 +5,7 @@ import com.tw.step8.assignment5.exceptions.MaxCapacityExceededException;
 import com.tw.step8.assignment5.exceptions.NegativeCapacityException;
 
 import java.util.HashSet;
+import java.util.function.Predicate;
 
 public class Bag {
 
@@ -30,6 +31,20 @@ public class Bag {
       throw new MaxCapacityExceededException();
     }
 
+    validateBall(ball);
+
+    return this.balls.add(ball);
+  }
+
+  private void validateBall(Ball ball) throws MaxCapacityExceededException, CannotAddBallException {
+    if (ball.isOfSameColor(Color.BLACK) && isBallPresent(Color.BLUE)) {
+      throw new CannotAddBallException();
+    }
+
+    if (ball.isOfSameColor(Color.BLUE) && isBallPresent(Color.BLACK)) {
+      throw new CannotAddBallException();
+    }
+
     if (ball.isOfSameColor(Color.GREEN) && hasMaxBallsOf(Color.GREEN, 3)) {
       throw new MaxCapacityExceededException();
     }
@@ -41,8 +56,10 @@ public class Bag {
     if (ball.isOfSameColor(Color.YELLOW) && isYellowBallNotAllowed()) {
       throw new CannotAddBallException();
     }
+  }
 
-    return this.balls.add(ball);
+  private boolean isBallPresent(Color color) {
+    return this.balls.stream().anyMatch(ball -> ball.isOfSameColor(color));
   }
 
   private boolean isYellowBallNotAllowed() {

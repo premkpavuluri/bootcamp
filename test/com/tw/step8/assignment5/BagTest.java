@@ -52,10 +52,26 @@ class BagTest {
   }
 
   @Test
-  void shouldThrowCannotAddBallExceptionWhenAddingYellowBallIfFourtyPercentOfBallsAreYellow() throws NegativeCapacityException, CannotAddBallException, MaxCapacityExceededException {
+  void shouldThrowCannotAddBallExceptionWhenAddingYellowBallIfFortyPercentOfBallsAreYellow() throws NegativeCapacityException, CannotAddBallException, MaxCapacityExceededException {
     Bag bag = Bag.createBag(4);
     bag.add(new Ball(1, Color.GREEN));
 
     assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2,Color.YELLOW)));
+  }
+
+  @Test
+  void shouldThrowCannotAddBallExceptionWhenTryToAddBlackBallIfBlueBallIsPresent() throws NegativeCapacityException, CannotAddBallException, MaxCapacityExceededException {
+    Bag bag = Bag.createBag(5);
+    bag.add(new Ball(1,Color.BLUE));
+
+    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2,Color.BLACK)));
+  }
+
+  @Test
+  void shouldThrowCannotAddBallExceptionWhenTryToAddBlueBallIfBlackBallIsPresent() throws NegativeCapacityException, CannotAddBallException, MaxCapacityExceededException {
+    Bag bag = Bag.createBag(5);
+    bag.add(new Ball(1,Color.BLACK));
+
+    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2,Color.BLUE)));
   }
 }
