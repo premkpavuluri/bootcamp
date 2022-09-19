@@ -1,5 +1,6 @@
 package com.tw.step8.assignment5;
 
+import com.tw.step8.assignment5.exceptions.CannotAddBallException;
 import com.tw.step8.assignment5.exceptions.MaxCapacityExceededException;
 import com.tw.step8.assignment5.exceptions.NegativeCapacityException;
 
@@ -24,7 +25,7 @@ public class Bag {
     return new Bag(maxCapacity);
   }
 
-  public boolean add(Ball ball) throws MaxCapacityExceededException {
+  public boolean add(Ball ball) throws MaxCapacityExceededException, CannotAddBallException {
     if(isFull()) {
      throw new MaxCapacityExceededException();
     }
@@ -32,16 +33,30 @@ public class Bag {
     if(ball.isOfSameColor(Color.GREEN) && hasMaxBallsOf(Color.GREEN,3)) {
       throw new MaxCapacityExceededException();
     }
+    
+    if(ball.isOfSameColor(Color.RED) && isRedBallNotAllowedToAdd()) {
+      throw new CannotAddBallException();
+    }
 
     return this.balls.add(ball);
   }
 
-  private boolean hasMaxBallsOf(Color color, int capacity) {
-    long ballCount = this.balls.stream()
+  private boolean isRedBallNotAllowedToAdd() {
+    int greenBallCount = ballsOfColor(Color.GREEN);
+    int redBallCount = ballsOfColor(Color.RED);
+
+    return (greenBallCount * 2) <= redBallCount;
+  }
+
+  private int ballsOfColor(Color color) {
+    return (int) this.balls.stream()
         .filter(ball -> ball.isOfSameColor(color))
         .count();
+  }
 
-    System.out.println(ballCount);
+  private boolean hasMaxBallsOf(Color color, int capacity) {
+    int ballCount = ballsOfColor(color);
+
     return ballCount >= capacity;
   }
 
