@@ -19,14 +19,29 @@ class BagTest {
   void shouldAddBallToBag() throws NegativeCapacityException, MaxCapacityExceededException {
     Bag bag = Bag.createBag(12);
 
-    assertTrue(bag.add(new Ball(1)));
+    assertTrue(bag.add(new Ball(1, Color.GREEN)));
   }
 
   @Test
   void shouldThrowMaxCapacityExceededExceptionWhenBagIsFull() throws NegativeCapacityException, MaxCapacityExceededException {
     Bag bag = Bag.createBag(1);
-    bag.add(new Ball(1));
+    bag.add(new Ball(1, Color.GREEN));
 
-    assertThrows(MaxCapacityExceededException.class, () -> bag.add(new Ball(2)));
+    assertThrows(MaxCapacityExceededException.class, () -> bag.add(new Ball(2, Color.GREEN)));
+  }
+
+  @Test
+  void shouldThrowMaxCapacityExceededExceptionIfMoreThanThreeGreenBallsAdded() throws NegativeCapacityException, MaxCapacityExceededException {
+    Bag bag = Bag.createBag(4);
+    bag.add(new Ball(1, Color.GREEN));
+    bag.add(new Ball(2, Color.GREEN));
+    bag.add(new Ball(3, Color.GREEN));
+
+    assertThrows(MaxCapacityExceededException.class, new Executable() {
+      @Override
+      public void execute() throws Throwable {
+        bag.add(new Ball(4, Color.GREEN));
+      }
+    });
   }
 }

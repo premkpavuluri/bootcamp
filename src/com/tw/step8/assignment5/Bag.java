@@ -25,10 +25,27 @@ public class Bag {
   }
 
   public boolean add(Ball ball) throws MaxCapacityExceededException {
-    if(this.balls.size() >= this.maxCapacity) {
+    if(isFull()) {
      throw new MaxCapacityExceededException();
     }
 
+    if(ball.isOfSameColor(Color.GREEN) && hasMaxBallsOf(Color.GREEN,3)) {
+      throw new MaxCapacityExceededException();
+    }
+
     return this.balls.add(ball);
+  }
+
+  private boolean hasMaxBallsOf(Color color, int capacity) {
+    long ballCount = this.balls.stream()
+        .filter(ball -> ball.isOfSameColor(color))
+        .count();
+
+    System.out.println(ballCount);
+    return ballCount >= capacity;
+  }
+
+  private boolean isFull() {
+    return this.balls.size() >= this.maxCapacity;
   }
 }
