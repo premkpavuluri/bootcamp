@@ -50,4 +50,12 @@ class BagTest {
 
     assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(4,Color.RED)));
   }
+
+  @Test
+  void shouldThrowCannotAddBallExceptionWhenAddingYellowBallIfFourtyPercentOfBallsAreYellow() throws NegativeCapacityException, CannotAddBallException, MaxCapacityExceededException {
+    Bag bag = Bag.createBag(4);
+    bag.add(new Ball(1, Color.GREEN));
+
+    assertThrows(CannotAddBallException.class, () -> bag.add(new Ball(2,Color.YELLOW)));
+  }
 }

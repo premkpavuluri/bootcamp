@@ -18,7 +18,7 @@ public class Bag {
 
 
   public static Bag createBag(int maxCapacity) throws NegativeCapacityException {
-    if(maxCapacity < 0) {
+    if (maxCapacity < 0) {
       throw new NegativeCapacityException(maxCapacity);
     }
 
@@ -26,19 +26,29 @@ public class Bag {
   }
 
   public boolean add(Ball ball) throws MaxCapacityExceededException, CannotAddBallException {
-    if(isFull()) {
-     throw new MaxCapacityExceededException();
-    }
-
-    if(ball.isOfSameColor(Color.GREEN) && hasMaxBallsOf(Color.GREEN,3)) {
+    if (isFull()) {
       throw new MaxCapacityExceededException();
     }
-    
-    if(ball.isOfSameColor(Color.RED) && isRedBallNotAllowedToAdd()) {
+
+    if (ball.isOfSameColor(Color.GREEN) && hasMaxBallsOf(Color.GREEN, 3)) {
+      throw new MaxCapacityExceededException();
+    }
+
+    if (ball.isOfSameColor(Color.RED) && isRedBallNotAllowedToAdd()) {
+      throw new CannotAddBallException();
+    }
+
+    if (ball.isOfSameColor(Color.YELLOW) && isYellowBallNotAllowed()) {
       throw new CannotAddBallException();
     }
 
     return this.balls.add(ball);
+  }
+
+  private boolean isYellowBallNotAllowed() {
+    int yellowBallCount = this.ballsOfColor(Color.YELLOW) + 1;
+
+    return (this.balls.size() * 0.4) < yellowBallCount;
   }
 
   private boolean isRedBallNotAllowedToAdd() {
