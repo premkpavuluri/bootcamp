@@ -13,7 +13,7 @@ public class ParkingLot {
     this.id = id;
     this.numberOfSlots = numberOfSlots;
     this.occupiedSlots = 0;
-    this.notifier = null;
+    this.notifier = new Notifier();
   }
 
   public static ParkingLot createParkingLot(int id, int numberOfSlots) throws NegativeSlotsException {
